@@ -1,0 +1,30 @@
+# Compose fileのバージョンを指定する。
+# 最新バージョンを使用する場合は、指定不要となる。
+# version: '3.9'
+
+services:
+
+  ################################
+  # MySQL
+  ################################
+  mysql-latest:
+    image: mysql:latest
+    container_name: mysql-latest
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      TZ: 'Asia/Tokyo'
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    volumes:
+      - ./docker/data:/var/lib/mysql
+    networks:
+      - shared-network
+
+networks:
+  shared-network:
+    external: true
